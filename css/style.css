@@ -1,0 +1,91 @@
+body{ 
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+    min-width: 800px;
+    min-height: 500px;
+    background-color: #533e3b;
+}
+
+.game {
+    background-color: #987364;
+    border: 2px solid black;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.board{
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid beige;
+    width: 700px;
+    height: 100px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.cell {
+    text-align: center;
+    align-items: center;
+    display: inline-block;
+    border: 2px solid blue;
+    width: 75px;
+    height: 75px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.rack{
+    background-image: url('images/scrabble-tile-holder-406774_640.png');
+    background-size: 600px;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 150px;
+    width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 40px;
+    display: inline-block;
+}
+
+.tile{
+    display: inline-block;
+    border: 2px solid beige;
+    margin: 10px auto;
+    width: 70px;
+    height: 70px;
+}
+
+.user-buttons{
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid black;
+    width: 400px;
+    height: 50px;
+    padding: 10px;
+    font-size: 20px;
+    display: inline-block;
+}
+
+.new-hand {
+    width: 100px;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.reset {
+    width: 100px;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+

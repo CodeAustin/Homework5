@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 5: Drag and Drop Scrabble</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Drag and Drop Scrabble</h1>
+    <div class="game">
+        <div class="info">
+            <div class="word">
+                <h3>Word: <span id="word-value"></span></h2>
+            </div>
+            <div class="score">
+                <h3>Score: <span id="score-value">0</span></h2>
+            </div>
+            <div class="remaining">
+                <h3>Tiles Remaining: <span id="remaining">0</span></h2>
+            </div>
+        </div>
+        <!-- 
+        Board will be represented by cells:
+        - Blank (blank)
+        - Double Letter (double_letter)
+        - Double Word (double_word)
+        This naming scheme prevents confusion with the letter tiles.
+         -->
+        <div class="board"> 
+            <div class="cell" id="blank">Blank</div>
+            <div class="cell" id="blank">Blank</div>
+            <div class="cell" id="double_letter">Double Letter</div>
+            <div class="cell" id="blank">Blank</div>
+            <div class="cell" id="double_word">Double Word</div>
+            <div class="cell" id="blank">Blank</div>
+            <div class="cell" id="blank">Blank</div>
+        </div>
+        <!-- Rack will be represented by tiles -->
+        <div class="rack">
+            <div class="tile" data-letter="A">A</div>
+            <div class="tile" data-letter="B">B</div>
+            <div class="tile" data-letter="C">C</div>
+            <div class="tile" data-letter="D">D</div>
+            <div class="tile" data-letter="E">E</div>
+            <div class="tile" data-letter="F">F</div>
+            <div class="tile" data-letter="G">G</div>
+        </div>
+    </div>
+    <div class = "user-buttons">
+        <div class="new hand">
+            <button class="new-hand">New Hand</button>
+        </div>
+
+        <div class="reset">
+            <button class="reset">Reset</button>
+        </div>
+    </div>
+    <!-- Import jQuery and jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
