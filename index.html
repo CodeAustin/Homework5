@@ -13,6 +13,7 @@
             <div class="word">
                 <h3>Word: <span id="word-value"></span></h2>
             </div>
+            
             <div class="score">
                 <h3>Score: <span id="score-value">0</span></h2>
             </div>
@@ -28,32 +29,35 @@
         This naming scheme prevents confusion with the letter tiles.
          -->
         <div class="board"> 
-            <div class="cell" id="blank">Blank</div>
-            <div class="cell" id="blank">Blank</div>
-            <div class="cell" id="double_letter">Double Letter</div>
-            <div class="cell" id="blank">Blank</div>
-            <div class="cell" id="double_word">Double Word</div>
-            <div class="cell" id="blank">Blank</div>
-            <div class="cell" id="blank">Blank</div>
+            <div class="cell" id="blank"></div>
+            <div class="cell" id="blank"></div>
+            <div class="cell" id="double-letter"></div>
+            <div class="cell" id="blank"></div>
+            <div class="cell" id="double-word"> </div>
+            <div class="cell" id="blank"></div>
+            <div class="cell" id="blank"></div>
         </div>
         <!-- Rack will be represented by tiles -->
         <div class="rack">
-            <div class="tile" data-letter="A">A</div>
-            <div class="tile" data-letter="B">B</div>
-            <div class="tile" data-letter="C">C</div>
-            <div class="tile" data-letter="D">D</div>
-            <div class="tile" data-letter="E">E</div>
-            <div class="tile" data-letter="F">F</div>
-            <div class="tile" data-letter="G">G</div>
+            <!-- Default list of tiles, if these load something is wrong-->
+            <div class="tile" id="A">A</div>
+            <div class="tile" id="B">B</div>
+            <div class="tile" id="C">C</div>
+            <div class="tile" id="D">D</div>
+            <div class="tile" id="E">E</div>
+            <div class="tile" id="F">F</div>
+            <div class="tile" id="G">G</div>
         </div>
     </div>
     <div class = "user-buttons">
-        <div class="new hand">
+        <div class="new-hand">
             <button class="new-hand">New Hand</button>
         </div>
-
+        <div class="recall">
+            <button class="recall">Recall Tiles </button>
+        </div>
         <div class="reset">
-            <button class="reset">Reset</button>
+            <button class="reset">Reset Game</button>
         </div>
     </div>
     <!-- Import jQuery and jQuery UI -->

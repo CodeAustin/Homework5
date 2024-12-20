@@ -10,37 +10,76 @@ body{
 
 .game {
     background-color: #987364;
-    border: 2px solid black;
+    border: 2px solid white;
     text-align: center;
     margin: 10px auto;
 }
 
-.board{
+.info {
+    text-align: center;
+    margin: 5px auto 0px auto;
+    width: 700px;
+    height: 80px;
+    display: flex;
+}
+
+.info div {
+    margin: auto auto auto auto; /* Center text vertically and horizontally, I give up on doing it properly */
+    padding: 20px; /* Add padding so that information is spaced correctly  */
+    color: black;
+}
+
+.info div.word {
+    min-width: 150px; /* Ensure that the word is always visible */
+    padding: 20px; /* Add padding so that information is spaced correctly  */
+    color: black;
+}
+
+.board {
     background-repeat: no-repeat;
     background-position: center;
     border: 2px solid beige;
     width: 700px;
-    height: 100px;
-    padding-left: 25px;
-    padding-right: 25px;
+    height: 130px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
     display: flex;
     align-items: center;
+    justify-content: center; /* Center cells horizontally */
+    gap: 2px; /* Set gap between cells */
+    padding: 0; /* Ensure no extra padding in the container */
 }
 
 .cell {
     text-align: center;
-    align-items: center;
-    display: inline-block;
-    border: 2px solid blue;
-    width: 75px;
-    height: 75px;
-    margin-left: auto;
-    margin-right: auto;
+    display: inline-flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    border: 1px solid black;
+    width: 85px;
+    height: 85px;
+    box-sizing: border-box; /* Ensure padding and border are included in dimensions */
+}
+
+.cell#blank {
+    background-image: url("images/BlankTile.png");
+    background-position: center;
 
 }
+
+.cell#double-letter {
+    background-image: url("images/DoubleLetter.png");
+    background-position: center;
+
+}
+
+.cell#double-word {
+    background-image: url("images/DoubleWord.png");
+    background-position: center;
+
+}
+
+
 
 .rack{
     background-image: url('images/scrabble-tile-holder-406774_640.png');
@@ -59,7 +98,6 @@ body{
 
 .tile{
     display: inline-block;
-    border: 2px solid beige;
     margin: 10px auto;
     width: 70px;
     height: 70px;
