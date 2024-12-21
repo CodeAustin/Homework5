@@ -15,7 +15,7 @@ The Reset Game option restores the game to its initial state as it was when the 
 
 Despite its functionality, the game has some limitations. A significant drawback is the lack of a word dictionary for validation. Although plans were made to integrate a word dictionary API, time constraints prevented its implementation. Additionally, the project was initially intended to include a full-sized Scrabble board for a more authentic gameplay experience. However, given the work on this project coincided with final exams, such a inclusion was impractical, thus the single-row board was implemented as a happy compromise. Another limitation lies in the organization of the script, as plans to refactoring the JavaScript code into multiple files to improve readability.
 
-Website: 
+Website: https://codeaustin.github.io/Homework5/
 
 ## References:
 Note that a large portion of this assignment was trial and error for me, so some references to code in this section may be incomplete.
