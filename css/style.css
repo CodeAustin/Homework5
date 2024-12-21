@@ -103,16 +103,28 @@ body{
     height: 70px;
 }
 
-.user-buttons{
-    margin-left: auto;
+.user-buttons {
+    display: flex; /* Align items side by side */
+    justify-content: space-between; /* Distribute space between buttons */
+    align-items: center; /* Center align items vertically */
+
+    /* Center the buttons */ 
+    margin-left: auto; 
     margin-right: auto;
     border: 2px solid black;
-    width: 400px;
-    height: 50px;
-    padding: 10px;
-    font-size: 20px;
-    display: inline-block;
+    
+    width: 500px; /* Set width of the container */
+    padding: 10px; /* Add padding to the container */
 }
+
+.user-buttons button {
+    width: 95px; /* Set consistent width for all buttons */
+    height: 45px; /* Set consistent height for all buttons */
+    font-size: 14px; /* Adjust font size to fit the button */
+    margin: 0 5px; /* Add spacing between buttons */
+    display: inline-block; /* Ensure buttons stay inline */
+}
+
 
 .new-hand {
     width: 100px;

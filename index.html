@@ -1,3 +1,25 @@
+<!--
+File: script.js
+GUI Assignment: HW5
+Austin Nguyen, UMass Lowell, austin_nguyen@student.uml.edu
+Copyright (c) 2024. All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
+
+Updated on December 20, 2024 by Austin Nguyen
+
+This file contains the main functionality for the single row Scrabble game. It loads the JSON data 
+from the "pieces.json" file, all 100 pieces, and generates the tiles for the game. 
+
+The user can drag and drop tiles from the rack to the board, wher the score is calculated based on 
+the cell type and tile value. Information displayed includes the current word, the current word 
+score, total score for the game, and the number of remaining tiles. All this information is updated
+dynamically as the user interacts in the game. 
+
+The four other functions are for the reset button, the submit button, the new hand function, and recall
+button. Reset will fully reset the tile pool, score, and board. Submit will submit the current word and
+update the total score. New hand will discard the current rack and draw 7 new tiles, updating the tile
+pool. Recall will recall all tiles on the board back to the rack.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,14 +33,17 @@
     <div class="game">
         <div class="info">
             <div class="word">
-                <h3>Word: <span id="word-value"></span></h2>
+                <h3>Word: <span id="word-value">NaN</span></h2>
             </div>
             
             <div class="score">
                 <h3>Score: <span id="score-value">0</span></h2>
             </div>
+            <div class="total-score">
+                <h3>Total Score: <span id="total-score">0</span></h3>
+            </div>
             <div class="remaining">
-                <h3>Tiles Remaining: <span id="remaining">0</span></h2>
+                <h3>Tiles Remaining: <span id="remaining">NaN</span></h2>
             </div>
         </div>
         <!-- 
@@ -50,6 +75,10 @@
         </div>
     </div>
     <div class = "user-buttons">
+        <div class="submit">
+            <button class="submit-word">Submit Word</button>
+        </div>
+        
         <div class="new-hand">
             <button class="new-hand">New Hand</button>
         </div>
