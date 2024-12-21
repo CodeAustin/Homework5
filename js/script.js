@@ -17,7 +17,7 @@ dynamically as the user interacts in the game.
 
 The four other functions are for the reset button, the submit button, the new hand function, and recall
 button. Reset will fully reset the tile pool, score, and board. Submit will submit the current word and
-update the total score. New hand will discard the current rack and draw 7 new tiles, updating the tile
+update the total score. New hand will return the current rack to the tile pool and draw 7 new tiles, updating the tile
 pool. Recall will recall all tiles on the board back to the rack.
 ***/
 $(function () {
@@ -56,8 +56,22 @@ $(function () {
     // Initialize the game
     initializeGame();
 
+    /* 
+    Four main event handlers exist, all with checks to ensure the game is in a valid state to perform
+    regardless of the user's actions. 
+
+    * Reset button: Clears the board, resets the game, and updates the current score.
+    * New Hand or Mulligan button: Returns the current rack to the tile pool and draws 7 new tiles.
+    * Recall button: Recalls all tiles on the board back to the rack.
+    * Submit button: Submits the current word, updates the total score, and refills the rack.
+
+    */
+
     // Event handler for the reset button
     $(".reset").on("click", function () {
+        // Clear the board
+        $(".board .cell .tile").remove();
+
         // Reinitialize the game
         initializeGame();
 
@@ -67,7 +81,12 @@ $(function () {
         // Reset the total score and the word score
         $("#total-score").text(currentScore);
 
-        submitWord();
+        $("#word-value").text(""); // Update the current word
+
+        // Enable draggable functionality for the tiles
+        $(".tile").draggable({
+            revert: "invalid"
+        });
     });
 
     // Event handler for the new hand button
@@ -77,11 +96,13 @@ $(function () {
             console.warn("Tile pool is empty, cannot draw new tiles.");
             return; // Exit the function
         }
-        else {
-            // Clear the current rack
-            $(".rack").empty();
-            // Draw 7 new tiles
-            createTiles(7);
+        // Case if there are tiles on the board
+        else if ($(".board .cell .tile").length > 0) {
+            console.warn("Tiles on the board, cannot draw new hand.");
+            return; // Exit the function
+        } else {
+            // Return tiles to the pool
+            mulligan();
         }
         $(".tile").draggable({
             revert: "invalid"
@@ -89,14 +110,56 @@ $(function () {
 
     });
 
-    function populateRack() {
+    // Event handler for the recall button
+    $(".recall").on("click", function () {
+        recallTiles();
+    });
+
+    // Event handler for the submit button
+    $(".submit-word").on("click", function () {
+        submitWord();
+        $("#word-value").text(""); // Reset the current word display
+    });
+
+    /*  Helper function for the recall button */
+    function recallTiles() {
+        const rack = $(".rack"); // Select the rack where tiles will be placed
+
+        $(".board .cell .tile").each(function () {
+            const tile = $(this); // Select the current tile
+
+            // Move the tile directly back to the rack
+            rack.append(tile);
+
+            // Reset the tile's CSS for proper alignment in the rack
+            tile.css({
+                top: "0px",
+                left: "0px",
+                position: "relative" // Ensure tiles respect the rack's flexbox layout
+            });
+
+            // Reinitialize draggable functionality for each tile
+            tile.draggable("destroy").draggable({
+                revert: "invalid",
+                containment: ".game-container", // Optional: Limit dragging to game area
+                stack: ".tile" // Ensure tiles stack correctly when dragged
+            });
+        });
+
+        // Reset the score and word display
+        score = 0; // Reset the score to 0
+        $("#score-value").text(0); // Update the score after recalling the tiles
+        $("#word-value").text(""); // Update the current word to empty
+    }
+
+    function refill() {
         const rack = $(".rack"); // Ensure rack is defined
         const tilesOnBoard = $(".board .cell .tile").length; // Count tiles currently on the board
         const rackTiles = rack.children(".tile").length; // Count tiles currently in the rack
         const missingTiles = 7 - (rackTiles + tilesOnBoard); // Calculate the number of tiles to draw
     
         if (missingTiles <= 0) {
-            return; // No need to populate if there are already 7 tiles total
+            return; // No need to refill if there are already 7 tiles total
         }
     
         // Draw tiles only for the missing number
@@ -109,18 +172,59 @@ $(function () {
     }
     
 
-    // Event handler for the score updates
+    // Function for the score updates
     function updateScore() {
         let wordScore = calculateBoardScore(); // Calculate the score of the current board
         $("#score-value").text(wordScore); // Update the score display
-
     }
 
-    // Event handler for the submit button
-    $(".submit-word").on("click", function () {
-        submitWord();
-    });
+    function updateWord() {
+        const cells = $(".board .cell"); // All board cells
+        const word = []; // Initialize an empty array for the word
     
+        // Build the word from the tiles on the board
+        cells.each(function () {
+            const tile = $(this).find(".tile");
+            if (tile.length > 0) {
+                word.push(tile.attr("id")); // Collect the letter ID
+            }
+        });
+    
+        // Join the letters into a string and update the current word display
+        $("#word-value").text(word.join(""));
+    }
+    
+    // Function to perform a mulligan: return rack tiles to the pool and replace them
+    function mulligan() {
+        const rack = $(".rack"); // Select the rack container
+
+        // Return current tiles in the rack to the pool
+        rack.children(".tile").each(function () {
+            const tile = $(this); // Select the current tile
+            const letter = tile.attr("id"); // Get the letter of the tile
+
+            // Find the corresponding tile data
+            const tileItem = tileData.pieces.find(piece => piece.letter === letter);
+
+            if (tileItem) {
+                // Add the tile back to the pool
+                tilePool.push(tileItem);
+            }
+
+            // Remove the tile from the rack
+            tile.remove();
+        });
+
+        // Draw 7 new tiles for the rack
+        createTiles(7);
+
+        // Update the UI to reflect the remaining tiles in the pool
+        $(".remaining span").text(tilePool.length);
+
+        // Reset the word and score displays
+        $("#word-value").text("");
+        $("#score-value").text(0);  
+    }
 
     function submitWord() {
         const cells = $(".board .cell"); // All board cells
@@ -147,8 +251,8 @@ $(function () {
             }
         });
     
-        // Populate new tiles on the rack
-        populateRack();
+        // Restock new tiles on the rack
+        refill();
     
         // Reinitialize draggable functionality for new tiles
         // Note, I have no idea why this works here but it does.
@@ -157,10 +261,11 @@ $(function () {
         });
         $("#score-value").text(0); // Reset the word score display
     }
-    
+
     // Attach updateScore to the drop event
     $(".cell").on("drop", function () {
         updateScore();
+        setTimeout(updateWord, 0); // Delay updateWord to ensure DOM is fully updated
     });
     
     // Drag-and-drop functionality
@@ -253,14 +358,14 @@ $(function () {
     function createTiles(count) {
         const rack = $(".rack"); // Ensure rack is accessible
         if (!tilePool || tilePool.length === 0) {
-            console.error("Tile pool is empty or not initialized, json missing.");
+            alert("Tile pool is empty or not initialized, json missing.");
             return; // Exit if the tile pool is not ready
         }
     
         // Draw tiles for the given count
         for (let i = 0; i < count; i++) {
             if (tilePool.length === 0) {
-                console.warn("Tile pool is empty, cannot draw more tiles.");
+                alert("Tile pool is empty, cannot draw more tiles.");
                 break; // No tiles left in the pool
             }
 
